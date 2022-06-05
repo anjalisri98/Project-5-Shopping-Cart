@@ -72,16 +72,19 @@ const isValidNum = function(value) {
     return true
 }
 
+//Validation for Quantity
 const validQuantity = function isInteger(value) {
     if(value < 1) return false
      if(value % 1 == 0 ) return true
 }
 
+//Validation for alphabetcal string 
 const isValidScripts= function(title){
     const scriptRegex = /^(?![0-9]*$)[A-Za-z0-9\s\-_,\.;:()]+$/
     return scriptRegex.test(title)
 }
 
+//Validation for Strings
 const validString = function (value) {
     if (typeof value === 'string' && value.trim().length === 0) return false
     return true;

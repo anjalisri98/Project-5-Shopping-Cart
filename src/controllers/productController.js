@@ -72,8 +72,8 @@ const createProduct = async function (req, res) {
 
 
         // Checking duplicate entry of title
-        let duplicateTitle = await productModel.find({ title: title })
-        if (duplicateTitle.length != 0) {
+        let duplicateTitle = await productModel.findOne({ title: title })
+        if (duplicateTitle.length) {
             return res.status(400).send({ status: false, msg: "Title already exist" })
         }
 
@@ -133,7 +133,7 @@ const getproducts = async function (req, res) {
 
         if (priceGreaterThan) {
             if (!isValid(priceGreaterThan)) {
-                return res.status(400).send({ status: false, message: `User id ${priceGreaterThan} is not valid` })
+                return res.status(400).send({ status: false, message: `${priceGreaterThan} is not valid` })
             }
             if (!isValidNum(priceGreaterThan)) {
                 return res.status(400).send({ status: true, message: "Price Should be in number" })
@@ -147,7 +147,7 @@ const getproducts = async function (req, res) {
 
         if (priceLessThan) {
             if (!isValid(priceLessThan)) {
-                return res.status(400).send({ status: false, message: `User id ${priceLessThan} is not valid` })
+                return res.status(400).send({ status: false, message: ` ${priceLessThan} is not valid` })
             }
             if (!isValidNum(priceLessThan)) {
                 return res.status(400).send({ status: true, message: "Price Should be in number" })
@@ -176,13 +176,13 @@ const getproducts = async function (req, res) {
 
         if (priceGreaterThan && priceLessThan) {
             if (!isValid(priceGreaterThan)) {
-                return res.status(400).send({ status: false, message: `User id ${priceGreaterThan} is not valid` })
+                return res.status(400).send({ status: false, message: `${priceGreaterThan} is not valid` })
             }
             if (!isValidNum(priceGreaterThan)) {
                 return res.status(400).send({ status: true, message: "Price Should be in number" })
             }
             if (!isValid(priceLessThan)) {
-                return res.status(400).send({ status: false, message: `User id ${priceLessThan} is not valid` })
+                return res.status(400).send({ status: false, message: `${priceLessThan} is not valid` })
             }
             if (!isValidNum(priceLessThan)) {
                 return res.status(400).send({ status: true, message: "Price Should be in number" })
@@ -209,7 +209,7 @@ const getproducts = async function (req, res) {
         const findbyfilter = await productModel.find(getproduct).sort({ price: priceSort }).select({ _v: 0 })
           
         //If product Document not found
-        if (findbyfilter.length == 0) return res.status(404).send({ msg: "product not found" })
+        if (findbyfilter.length == 0) return res.status(404).send({ messageg: "product not found" })
         return res.status(200).send({ msg: "All products", data: findbyfilter })
     } catch (err) {
         res.status(500).send({ status: false, error: err.message })
@@ -262,7 +262,7 @@ const updateProduct = async function (req, res) {
 
         //Validation for empty Body
         if (!isValidRequestBody(updateData)) {
-            return res.status(400).send({ status: true, msg: "Details must be present" })
+            return res.status(400).send({ status: true, message: "Details must be present" })
         }
         //Destructuring the object
         const { title, description, price, currencyId, isFreeShipping, availableSizes, style, installments, isDeleted } = updateData
@@ -274,7 +274,7 @@ const updateProduct = async function (req, res) {
 
         //validation for description
         if (!validString(description) || !isValidScripts(description)) {
-            return res.status(400).send({ status: true, msg: "description is mandatory" })
+            return res.status(400).send({ status: true, message: "description is mandatory" })
         }
 
         //validation for price
@@ -292,10 +292,10 @@ const updateProduct = async function (req, res) {
         //validation for currency Id
         if (currencyId) {
             if (!isValid(currencyId)) {
-                return res.status(400).send({ status: true, msg: "CurrencyId is mandatory" })
+                return res.status(400).send({ status: true, message: "CurrencyId is mandatory" })
             }
             if (currencyId !== "INR") {
-                res.status(400).send({ status: false, msg: "currency should be in INR" })
+                res.status(400).send({ status: false, message: "currency should be in INR" })
                 return
             }
 

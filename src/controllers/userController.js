@@ -319,7 +319,7 @@ const updateUser = async (req, res) => {
 
         //validation for email
         if (!validString(email)) {
-            return res.status(400).send({ status: false, message: 'lname is Required' })
+            return res.status(400).send({ status: false, message: 'Email is Required' })
         }
         if (email) {
             if (!isValid(email)) {
@@ -357,18 +357,18 @@ const updateUser = async (req, res) => {
 
             //if found
             if (uniquePhone) {
-                return res.status(409).send({ status: false, msg: "Phone number already exist" })
+                return res.status(400).send({ status: false, msg: "Phone number already exist" })
             }
         }
 
         //validation for password
         if (!validString(password)) {
-            return res.status(400).send({ status: false, message: 'lname is Required' })
+            return res.status(400).send({ status: false, message: 'Password is Required' })
         }
         if (password) {
-            if (!isValid(password)) return res.status(400).send({ status: false, msg: "Password is a mendatory field" })
+            if (!isValid(password)) return res.status(400).send({ status: false, message: "Password is a mendatory field" })
 
-            if (!isValidPassword(password)) return res.status(400).send({ status: false, msg: `Password ${password}  must include atleast one special character[@$!%?&], one uppercase, one lowercase, one number and should be mimimum 8 to 15 characters long` })
+            if (!isValidPassword(password)) return res.status(400).send({ status: false, message: `Password ${password}  must include atleast one special character[@$!%?&], one uppercase, one lowercase, one number and should be mimimum 8 to 15 characters long` })
 
 
             //bcrypting password using hash
@@ -378,7 +378,7 @@ const updateUser = async (req, res) => {
 
         //validations for address
         if (!validString(address)) {
-            return res.status(400).send({ status: false, message: 'lname is Required' })
+            return res.status(400).send({ status: false, message: 'Address is Required' })
         }
         if (address) {
 
